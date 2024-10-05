@@ -42,10 +42,19 @@
         opacity: 1;
       }
 
+      .infos {
+        display: none;
+      }
+
+      .zoomed .infos {
+        display: block;
+        opacity: 1;
+      }
+
       #data a.active {
         color: cyan;
       }
-
+      
     </style>
   </head>
   <body class="opening hide-UI view-2D zoom-large data-close controls-close">
@@ -92,7 +101,7 @@
       <div id="galaxy">
         <div id="solar-system" class="earth">
         
-
+          <!-- Mercury -->
           <div id="mercury" class="orbit">
             <div class="pos">
               <div class="planet" id="mercury-planet" data-name="Mercury" data-speed="47.87 km/s" data-distance="4.5 billion km">
@@ -103,6 +112,7 @@
             </div>
           </div>
 
+          <!-- Venus -->
           <div id="venus" class="orbit">
             <div class="pos">
               <div class="planet" id="venus-planet" data-name="Venus" data-speed="35.02 km/s" data-distance="4.5 billion km">
@@ -113,6 +123,7 @@
             </div>
           </div>
 
+          <!-- Earth -->
           <div id="earth" class="orbit">
             <div class="pos">
               <div class="planet" id="earth-planet" data-name="Earth" data-speed="29.78 km/s" data-distance="4.5 billion km">
@@ -123,6 +134,7 @@
             </div>
           </div>
 
+          <!-- Mars -->
           <div id="mars" class="orbit">
             <div class="pos">
               <div class="planet" id="mars-planet" data-name="Mars" data-speed="24.13 km/s" data-distance="4.5 billion km">
@@ -133,6 +145,7 @@
             </div>
           </div>
 
+          <!-- Jupiter -->
           <div id="jupiter" class="orbit">
             <div class="pos">
               <div class="planet" id="jupiter-planet" data-name="Jupiter" data-speed="13.07 km/s" data-distance="4.5 billion km">
@@ -143,6 +156,7 @@
             </div>
           </div>
 
+          <!-- Saturn -->
           <div id="saturn" class="orbit">
             <div class="pos">
               <div class="planet" id="saturn-planet" data-name="Saturn" data-speed="9.69 km/s" data-distance="4.5 billion km">
@@ -153,7 +167,7 @@
             </div>
           </div>
 
-
+          <!-- Uranus -->
           <div id="uranus" class="orbit">
             <div class="pos">
               <div class="planet" id="uranus-planet" data-name="Uranus" data-speed="6.81 km/s" data-distance="4.5 billion km">
@@ -178,11 +192,8 @@
           <!-- Sun -->
           <div id="sun" class="planet" id="sun-planet">
             <dl class="infos">
-              <dt>Sun</dt>
+              <dt>Sun <br><span class="speed">0 km/s</span></dt>
             </dl>
-            <div class="planet-label">
-              Sun
-            </div>
           </div>
           
         </div>
@@ -202,33 +213,49 @@
     <!-- JavaScript to add click-to-zoom and info box functionality -->
     <script>
       const planets = document.querySelectorAll('.planet');
+      const planetLinks = document.querySelectorAll('#data a');
+
+      // Function to remove the zoom and active classes from all elements
+      function resetZoomAndActive() {
+        document.querySelectorAll('.zoomed').forEach(zoomed => {
+          zoomed.classList.remove('zoomed');
+        });
+        document.querySelector('#data a.active')?.classList.remove('active');
+        document.querySelectorAll('.infos').forEach(info => {
+          info.style.display = 'none';
+        });
+      }
 
       // Handle planet clicks
       planets.forEach(planet => {
         planet.addEventListener('click', function() {
-          // Remove the zoom effect from all planets
-          document.querySelectorAll('.zoomed').forEach(zoomed => {
-            zoomed.classList.remove('zoomed');
-          });
+          resetZoomAndActive();
 
-          // Add the zoom effect to the clicked planet
-          this.closest('.orbit').classList.add('zoomed');
+          // Add zoom effect to the clicked planet
+          const orbitElement = this.closest('.orbit');
+          if (orbitElement) {
+            orbitElement.classList.add('zoomed');
+            this.querySelector('.infos').style.display = 'block'; // Show planet info
+          }
+
+          // Set the corresponding link as active
+          const planetName = this.dataset.name.toLowerCase();
+          document.querySelector(`#data a[data-planet="${planetName}"]`).classList.add('active');
         });
       });
 
       // Handle data (planet name) clicks
-      const planetLinks = document.querySelectorAll('#data a');
       planetLinks.forEach(link => {
         link.addEventListener('click', function(e) {
           e.preventDefault();
+          resetZoomAndActive();
 
           // Trigger the planet click
           const planetId = this.getAttribute('data-planet') + "-planet";
           const planet = document.getElementById(planetId);
           planet.click();
 
-          // Set the active link
-          document.querySelector('#data a.active')?.classList.remove('active');
+          // Set the clicked link as active
           this.classList.add('active');
         });
       });
