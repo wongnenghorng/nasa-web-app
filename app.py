@@ -1,11 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from ultralytics import YOLO
+import sys
 
 app = Flask(__name__)
 
+# 定位模型路径，适应打包后和未打包的环境
+if getattr(sys, 'frozen', False):
+    # 打包后的路径
+    model_path = os.path.join(sys._MEIPASS, "best.pt")
+else:
+    # 开发环境下的路径
+    model_path = "best.pt"
+
 # 加载 YOLOv11 模型
-model_path = "best.pt"  # 确保模型文件路径正确
 model = YOLO(model_path)
 
 # 设置上传目录
@@ -30,20 +38,24 @@ def upload():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filepath)
         
-        # 使用模型进行推理
-        results = model(filepath)
+        try:
+            # 使用模型进行推理
+            results = model(filepath)
+            
+            # 选择置信度最高的分类结果
+            if results and len(results) > 0:
+                top_result = results[0]  # 获取第一个结果
+                top1_class_index = top_result.probs.top1  # 获取最高置信度类的索引
+                class_name = model.names[top1_class_index].lower()  # 获取类的名称并转换为小写
 
-        # 选择置信度最高的分类结果
-        if results and len(results) > 0:
-            top_result = results[0]  # 获取第一个结果
-            top1_class_index = top_result.probs.top1  # 获取最高置信度类的索引
-            class_name = model.names[top1_class_index].lower()  # 获取类的名称并转换为小写
-
-            # 渲染结果页面，并显示分类结果
-            return render_template('result.html', class_name=class_name, image_file=file.filename)
-        else:
-            # 没有分类结果
-            return render_template('result.html', message="No classification result found", image_file=file.filename)
+                # 渲染结果页面，并显示分类结果
+                return render_template('result.html', class_name=class_name, image_file=file.filename)
+            else:
+                # 没有分类结果
+                return render_template('result.html', message="No classification result found", image_file=file.filename)
+        except Exception as e:
+            # 处理推理期间的错误
+            return render_template('result.html', message=f"Error during inference: {str(e)}", image_file=file.filename)
 
 @app.route('/mercury.html')
 def mercury():
