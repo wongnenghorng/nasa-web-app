@@ -98,6 +98,11 @@
             opacity: 1;
             visibility: visible;
         }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -105,20 +110,19 @@
         <h1>Earth</h1>
 
         <!-- 加载3D模型 -->
-        <model-viewer src="{{ url_for('static', filename='models/earth.glb') }}" alt="地球"
+        <model-viewer id="earth-viewer" src="{{ url_for('static', filename='models/earth with asteroid(18).glb') }}" alt="地球"
                       camera-controls auto-rotate ar
                       environment-image="neutral" exposure="1"
                       shadow-intensity="1"
                       style="width: 100%; height: 700px;">
         </model-viewer>
 
-        <!-- 弹出按钮 -->
-        <button id="open-popup">Show Planet Details</button>
+        <!-- 弹出按钮（可选） -->
+        <button id="open-popup" style="display: none;">Show Planet Details</button>
 
         <!-- 返回首页链接 -->
         <br><br>
         <a href="{{ url_for('home') }}">Return To Home Page</a>
-
     </div>
 
     <!-- Popup overlay -->
@@ -126,8 +130,8 @@
 
     <!-- Popup for planet description -->
     <div id="popup" class="popup">
-      <h2>Earth - Our Hometown</h2>
-      <p>Earth is the only known planet to support life. Its surface is 71% covered by water, and it has a temperate climate, an 
+      <h2 id="popup-title">Earth - Our Hometown</h2>
+      <p id="popup-content">Earth is the only known planet to support life. Its surface is 71% covered by water, and it has a temperate climate, an 
         atmosphere rich in oxygen and nitrogen, and a magnetic field that protects it from solar and cosmic radiation. Earth’s 
         position in the habitable zone allows for the presence of liquid water, vital for life.<br><br>
 
@@ -135,17 +139,31 @@
 
         Orbital Period: 365.25 Earth days
     </p>
-      <button id="close-popup">Close</button>
+      <div class="button-container">
+          <button id="close-popup">Close</button>
+          <button id="more-details">More Details</button>
+      </div>
     </div>
 
     <script>
+        const earthViewer = document.getElementById('earth-viewer');
         const openPopupButton = document.getElementById('open-popup');
         const closePopupButton = document.getElementById('close-popup');
+        const moreDetailsButton = document.getElementById('more-details');
         const popup = document.getElementById('popup');
         const overlay = document.getElementById('overlay');
+        const popupTitle = document.getElementById('popup-title');
+        const popupContent = document.getElementById('popup-content');
 
-        // 打开弹窗
-        openPopupButton.addEventListener('click', function() {
+        // 点击地球模型时，显示弹窗
+        earthViewer.addEventListener('click', function() {
+            popupTitle.innerHTML = "Planets, Near-Earth Asteroids, Near-Earth Comets, Potentially Hazardous Asteroids";
+            popupContent.innerHTML = `
+                <strong>Planets:</strong> Large celestial bodies orbiting a star.<br><br>
+                <strong>Near-Earth Asteroids (NEAs):</strong> These are asteroids that have orbits bringing them close to Earth's orbit. Their perihelion distance is less than 1.3 AU from the Sun. NEAs are of interest for both scientific research and planetary defense due to their potential proximity to Earth.<br><br>
+                <strong>Near-Earth Comets (NECs):</strong> These are comets with orbits that bring them close to Earth. Unlike asteroids, comets typically have a mixture of ice and dust, and when they approach the Sun, they form tails or comas due to the sublimation of their ice.<br><br>
+                <strong>Potentially Hazardous Asteroids (PHAs):</strong> These are a special subset of NEAs. PHAs have orbits that come within 0.05 AU of Earth and are large enough (usually over 140 meters in diameter) to cause significant damage if they impact Earth. They are closely monitored for any impact threat.<br><br>
+            `;
             popup.classList.add('show');
             overlay.classList.add('show');
         });
@@ -160,6 +178,11 @@
         overlay.addEventListener('click', function() {
             popup.classList.remove('show');
             overlay.classList.remove('show');
+        });
+
+        // 点击 "More Details" 按钮，跳转到新页面
+        moreDetailsButton.addEventListener('click', function() {
+            window.location.href = "{{ url_for('earthasteroids') }}";
         });
     </script>
 </body>

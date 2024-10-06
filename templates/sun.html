@@ -102,7 +102,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Earth</h1>
+        <h1>Sun</h1>
 
         <!-- 加载3D模型 -->
         <model-viewer src="{{ url_for('static', filename='models/sun.glb') }}" alt="地球"
@@ -113,11 +113,11 @@
         </model-viewer>
 
         <!-- 弹出按钮 -->
-        <button id="open-popup">显示行星描述</button>
+        <button id="open-popup">Show detail</button>
 
         <!-- 返回首页链接 -->
         <br><br>
-        <a href="{{ url_for('home') }}">返回首页</a>
+        <a href="{{ url_for('home') }}">Back To Home Page</a>
 
     </div>
 
@@ -126,9 +126,10 @@
 
     <!-- Popup for planet description -->
     <div id="popup" class="popup">
-      <h2>地球 - 我们的家园</h2>
-      <p>地球是太阳系中的第三颗行星，也是唯一一颗已知拥有生命的行星。地球拥有丰富的水资源、适宜的气候和大气层，使其成为生命的家园。</p>
-      <button id="close-popup">关闭</button>
+      <h2>Sun</h2>
+      <p>
+        The Sun is a massive, glowing ball of hot plasma at the center of the solar system, primarily composed of hydrogen and helium. It has a diameter of about 1.39 million kilometers and contains over 99.8% of the solar system's mass. The Sun's surface temperature is around 5,500°C, while its core reaches 15 million°C, producing energy through nuclear fusion. This energy radiates as light and heat, making life on Earth possible. The Sun's layers include the core, radiative and convective zones, photosphere, chromosphere, and corona.</p>
+      <button id="close-popup">Close</button>
     </div>
 
     <script>

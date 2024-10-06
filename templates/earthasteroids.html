@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水星 - 太阳的邻居</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/planet.css') }}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('{{ url_for('static', filename='images/bg-stars.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            position: absolute;
+            top: 30px;
+            left: 20px;
+            margin: 0;
+            font-size: 24px;
+            color: white;
+        }
+
+        a {
+            color: cyan;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Planet info box styling */
+        .planet-box {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid white;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .box1 { top: 5%; left: 18%; }
+        .box2 { top: 8%; left: 70%; }
+        .box3 { top: 30%; left: 5%; }
+        .box4 { top: 30%; left: 78%; }
+        .box5 { top: 60%; left: 5%; }
+        .box6 { top: 80%; right: 15%; }
+        .box7 { bottom: 5%; left: 25%; }
+        .box8 { bottom: 25%; right: 5%; }
+        .box9 { top: 80%; left: 45%; }
+        .box10 { top: 5%; right: 40%; }
+
+        /* Popup styling */
+        .popup {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .popup.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .popup h2 {
+            margin-top: 0;
+        }
+
+        .popup p {
+            margin-bottom: 20px;
+        }
+
+        .popup button {
+            background-color: cyan;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .popup button:hover {
+            background-color: darkcyan;
+        }
+
+        /* Overlay for dimming background */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+        .planet-box {
+            display: none;
+        }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Earth Asteroids</h1>
+
+        <!-- 3D Model Viewer -->
+        <model-viewer id="earth-viewer" src="{{ url_for('static', filename='models/earth with asteroid(16).glb') }}" alt="Earth Asteroids"
+                      camera-controls auto-rotate ar environment-image="neutral" exposure="1"
+                      shadow-intensity="1" style="width: 100%; height: 700px;">
+        </model-viewer>
+
+        <!-- Planet Info Boxes -->
+        <div class="planet-box box1">433303（2013 NX）
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+        
+        <div class="planet-box box2">614689 (2020 XL5)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box3">459872 (2014 EK24)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box4">478784 (2012 UV136)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box5">523728 (2014 ON344)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box6">530871 (2011 WS2)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box7">454094 (2013 BZ45)
+            <p>Solution date: 2023-Mar-01 06:47:49</p>
+            <p>First observation used: 2013-01-19</p>
+            <p>Last observation used: 2019-08-27</p>
+        </div>
+
+        <div class="planet-box box8">419624 (2010 SO16)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box9">519354 (2011 KR12)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+
+        <div class="planet-box box10">441987 (2010 NY65)
+            <p>Solution date: 2021-Apr-14 14:12:02</p>
+            <p>First observation used: 2013-07-02</p>
+            <p>Last observation used: 2015-04-22</p>
+        </div>
+        
+    </div>
+
+    <!-- Popup overlay -->
+    <div id="overlay" class="overlay"></div>
+
+    <!-- Popup for planet description -->
+    <div id="popup" class="popup">
+        <h2 id="popup-title">Planet Info</h2>
+        <p id="popup-content">Planet details will be shown here.</p>
+        <div class="button-container">
+            <button id="close-popup">Close</button>
+            <button id="more-details">Home</button>
+        </div>
+    </div>
+
+    <script>
+        const earthViewer = document.getElementById('earth-viewer');
+        const closePopupButton = document.getElementById('close-popup');
+        const moreDetailsButton = document.getElementById('more-details');
+        const popup = document.getElementById('popup');
+        const overlay = document.getElementById('overlay');
+        const popupTitle = document.getElementById('popup-title');
+        const popupContent = document.getElementById('popup-content');
+
+        // 点击地球模型时，显示弹窗
+        earthViewer.addEventListener('click', function() {
+            popupTitle.innerHTML = "Top 10 Earth Asteroids in this 10 Years";
+            popupContent.innerHTML = `
+                <strong>433303 (2013 NX):</strong> Large celestial bodies orbiting a star.<br><br>
+                <strong>459872 (2014 EK24):First spotted in 2014, its observational data spans from 2013 to 2015. </strong> <br><br>
+                <strong>614689 (2020 XL5): Discovered in 2020, this asteroid had its orbital solution completed in 2021 after a series of observations dating back to 2013.</strong> <br><br>
+                <strong>478784 (2012 UV136): This asteroid was found in 2012 and has been monitored consistently through 2015.</strong> <br><br>
+                <strong>523728 (2014 ON344):  Another 2014 discovery, observed for over a year, with a solution completed in 2021.</strong> <br><br>
+                <strong>530871 (2011 WS2):  Discovered in 2011, this asteroid's solution date in 2021 followed observations from 2013 to 2015.</strong> <br><br>
+                <strong>454094 (2013 BZ45): </strong>  observed between 2013 and 2019, had its orbit finalized on March 1, 2023.<br><br>
+                <strong>419624 (2010 SO16):With observations starting in 2010, it remains a subject of interest due to its proximity to Earth's orbit. </strong> <br><br>
+                <strong>519354 (2011 KR12): Discovered in 2011, it was closely monitored until 2015, with its orbital path fully calculated by 2021.</strong> <br><br>
+                <strong>441987 (2010 NY65)： Like others, this asteroid has been observed over several years, with the last observations used in 2015.</strong> <br><br>
+            `;
+            popup.classList.add('show');
+            overlay.classList.add('show');
+        });
+
+        // 关闭弹窗
+        closePopupButton.addEventListener('click', function() {
+            popup.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+
+        // 点击遮罩层关闭弹窗
+        overlay.addEventListener('click', function() {
+            popup.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+
+        // 点击 "More Details" 按钮，跳转到新页面
+        moreDetailsButton.addEventListener('click', function() {
+            window.location.href = "{{ url_for('home') }}"; // 跳转到详细页面的 URL
+        });
+    </script>
+</body>
+</html>

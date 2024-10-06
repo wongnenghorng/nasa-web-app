@@ -53,6 +53,10 @@ def mercury():
 def venus():
     return render_template('venus.html')
 
+@app.route('/earthasteroids.html')
+def earthasteroids():
+    return render_template('earthasteroids.html')
+
 @app.route('/earth.html')
 def earth():
     return render_template('earth.html')

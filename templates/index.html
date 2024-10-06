@@ -104,14 +104,38 @@
         <span>Distance</span>
       </label>
     
-      <!-- 新增的检测图片功能 -->
       <form action="/upload" method="post" enctype="multipart/form-data">
-        <label class="upload-detect">
-          <input type="file" name="file" accept="image/*" required>
+        <label class="upload-label">
           <span>Choose Image</span>
+          <input type="file" name="file" accept="image/*" required>
         </label>
         <button type="submit" class="detect-btn">Detect Image</button>
       </form>
+      
+      <style>
+        /* 样式调整 */
+        .upload-label {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+      
+        .upload-label span {
+          font-size: 18px;
+          margin-bottom: 5px; /* 控制 "Choose Image" 与 "Choose File" 之间的距离 */
+          color: white; /* 您可以根据背景更改字体颜色 */
+        }
+      
+        .upload-label input[type="file"] {
+          text-align: center;
+        }
+        
+        .detect-btn {
+          margin-top: 10px; /* 调整按钮与文件输入框的距离 */
+        }
+      </style>
+      
     </div>
     
     
@@ -237,8 +261,9 @@
     <script src="{{ url_for('static', filename='js/prefixfree.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scripts.min.js') }}"></script>
 
-    <!-- JavaScript to handle Size and Distance selection -->
+    <!-- JavaScript to handle Speed, Size, and Distance selection -->
     <script>
+      const speedRadioButton = document.querySelector('input[name="scale"][class="set-speed"]');
       const sizeRadioButton = document.querySelector('input[name="scale"][class="set-size"]');
       const distanceRadioButton = document.querySelector('input[name="scale"][class="set-distance"]');
       const planets = document.querySelectorAll('.planet');
@@ -267,6 +292,19 @@
           });
         }
       });
+
+      speedRadioButton.addEventListener('change', function() {
+        if (this.checked) {
+          planets.forEach(planet => {
+            const speed = planet.getAttribute('data-speed');
+            const infosElement = planet.querySelector('.infos');
+            if (infosElement) {
+              infosElement.querySelector('dt').innerHTML = planet.getAttribute('data-name') + '<br><span class="speed">' + speed + '</span>';
+            }
+          });
+        }
+      });
+
     </script>
 
   </body>
