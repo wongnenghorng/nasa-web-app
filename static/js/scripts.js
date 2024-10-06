@@ -5,7 +5,7 @@ $(window).load(function(){
       solarsys = $("#solar-system");
 
   var init = function() {
-    body.removeClass('view-2D opening').addClass("view-3D").delay(2000).queue(function() {
+    body.removeClass('view-3D opening').addClass("view-2D").delay(2000).queue(function() {
       $(this).removeClass('hide-UI').addClass("set-speed");
       $(this).dequeue();
     });

@@ -105,6 +105,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   box-shadow: 0 0 60px rgba(255, 160, 60, 0.4); }
+  
 
 .planet {
   background-color: #202020;
@@ -1149,6 +1150,23 @@ dl.infos dd span:after {
 
 .hide-UI .orbit {
   border: 1px solid rgba(255, 255, 255, 0.2) !important; }
+
+/* Style for More Detail links for all planets */
+.infos a {
+  color: cyan;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 0px; /* 移除上方的空白间隙 */
+  display: inline; /* 将链接设置为行内元素，这样它会紧跟着上一个元素 */
+  padding-left: 5px; /* 如果需要一些间距，可以使用padding进行调整 */
+}
+
+.infos a:hover {
+  color: lightblue;
+  text-decoration: underline;
+}
+
 
 h1 {
   width: 100%;

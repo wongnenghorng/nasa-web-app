@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title dir="ltr">3D CSS Solar System</title>
+    <title dir="ltr">3D Solar System</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
       /* CSS for planet zoom effect */
@@ -21,7 +21,6 @@
       }
       
       .planet {
-        cursor: pointer;
         position: relative;
       }
 
@@ -54,26 +53,35 @@
       #data a.active {
         color: cyan;
       }
-      
+
+      /* Add styling for the 'For more information' links */
+      .infos a {
+        color: cyan;
+        text-decoration: none;
+        display: block;
+        font-size: 16px; /* Match the font size of the span class */
+        margin-top: 5px;
+      }
+
     </style>
   </head>
-  <body class="opening hide-UI view-2D zoom-large data-close controls-close">
+  <body class="opening hide-UI view-2Df zoom-large data-close controls-close">
     <div id="navbar">
       <a id="toggle-data" href="#data"><i class="icon-data"></i>Data</a>
-      <h1>3D CSS Solar System</h1>
+      <h1>3D Solar System</h1>
       <a id="toggle-controls" href="#controls"><i class="icon-controls"></i>Controls</a>
     </div>
     
     <div id="data">
-      <a class="sun" title="sun" href="#sunspeed" data-planet="sun">Sun</a>
-      <a class="mercury" title="mercury" href="#mercuryspeed" data-planet="mercury">Mercury</a>
-      <a class="venus" title="venus" href="#venusspeed" data-planet="venus">Venus</a>
-      <a class="earth" title="earth" href="#earthspeed" data-planet="earth">Earth</a>
-      <a class="mars" title="mars" href="#marsspeed" data-planet="mars">Mars</a>
-      <a class="jupiter" title="jupiter" href="#jupiterspeed" data-planet="jupiter">Jupiter</a>
-      <a class="saturn" title="saturn" href="#saturnspeed" data-planet="saturn">Saturn</a>
-      <a class="uranus" title="uranus" href="#uranusspeed" data-planet="uranus">Uranus</a>
-      <a class="neptune" title="neptune" href="#neptunespeed" data-planet="neptune">Neptune</a>
+      <a class="sun" title="sun" href="sun.html" data-planet="sun">Sun</a>
+      <a class="mercury" title="mercury" href="mercury.html" data-planet="mercury">Mercury</a>
+      <a class="venus" title="venus" href="venus.html" data-planet="venus">Venus</a>
+      <a class="earth" title="earth" href="earth.html" data-planet="earth">Earth</a>
+      <a class="mars" title="mars" href="mars.html" data-planet="mars">Mars</a>
+      <a class="jupiter" title="jupiter" href="jupiter.html" data-planet="jupiter">Jupiter</a>
+      <a class="saturn" title="saturn" href="saturn.html" data-planet="saturn">Saturn</a>
+      <a class="uranus" title="uranus" href="uranus.html" data-planet="uranus">Uranus</a>
+      <a class="neptune" title="neptune" href="neptune.html" data-planet="neptune">Neptune</a>
     </div>
     
     <div id="controls">
@@ -95,7 +103,17 @@
         <input type="radio" class="set-distance" name="scale">
         <span>Distance</span>
       </label>
+    
+      <!-- 新增的检测图片功能 -->
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label class="upload-detect">
+          <input type="file" name="file" accept="image/*" required>
+          <span>Choose Image</span>
+        </label>
+        <button type="submit" class="detect-btn">Detect Image</button>
+      </form>
     </div>
+    
     
     <div id="universe" class="scale-stretched">
       <div id="galaxy">
@@ -104,9 +122,10 @@
           <!-- Mercury -->
           <div id="mercury" class="orbit">
             <div class="pos">
-              <div class="planet" id="mercury-planet" data-name="Mercury" data-speed="47.87 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="mercury-planet" data-name="Mercury" data-speed="47.87 km/s" data-size="4,879 km" data-distance="57.9 million km">
                 <dl class="infos">
-                  <dt>Mercury <br><span class="speed"> 47.87km/s</span></dt>
+                  <dt>Mercury <br><span class="speed">47.87 km/s</span></dt>
+                  <a href="mercury.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -115,9 +134,10 @@
           <!-- Venus -->
           <div id="venus" class="orbit">
             <div class="pos">
-              <div class="planet" id="venus-planet" data-name="Venus" data-speed="35.02 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="venus-planet" data-name="Venus" data-speed="35.02 km/s" data-size="12,104 km" data-distance="108.2 million km">
                 <dl class="infos">
-                  <dt>Venus <br><span class="speed"> 35.02km/s</span></dt>
+                  <dt>Venus <br><span class="speed">35.02 km/s</span></dt>
+                  <a href="venus.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -126,9 +146,10 @@
           <!-- Earth -->
           <div id="earth" class="orbit">
             <div class="pos">
-              <div class="planet" id="earth-planet" data-name="Earth" data-speed="29.78 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="earth-planet" data-name="Earth" data-speed="29.78 km/s" data-size="12,742 km" data-distance="149.6 million km">
                 <dl class="infos">
-                  <dt>Earth <br><span class="speed"> 29.78km/s</span></dt>
+                  <dt>Earth <br><span class="speed">29.78 km/s</span></dt>
+                  <a href="earth.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -137,9 +158,10 @@
           <!-- Mars -->
           <div id="mars" class="orbit">
             <div class="pos">
-              <div class="planet" id="mars-planet" data-name="Mars" data-speed="24.13 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="mars-planet" data-name="Mars" data-speed="24.13 km/s" data-size="6,779 km" data-distance="227.9 million km">
                 <dl class="infos">
-                  <dt>Mars <br><span class="speed"> 24.13km/s</span></dt>
+                  <dt>Mars <br><span class="speed">24.13 km/s</span></dt>
+                  <a href="mars.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -148,9 +170,10 @@
           <!-- Jupiter -->
           <div id="jupiter" class="orbit">
             <div class="pos">
-              <div class="planet" id="jupiter-planet" data-name="Jupiter" data-speed="13.07 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="jupiter-planet" data-name="Jupiter" data-speed="13.07 km/s" data-size="139,820 km" data-distance="778.3 million km">
                 <dl class="infos">
-                  <dt>Jupiter <br><span class="speed"> 13.07km/s</span></dt>
+                  <dt>Jupiter <br><span class="speed">13.07 km/s</span></dt>
+                  <a href="jupiter.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -159,9 +182,10 @@
           <!-- Saturn -->
           <div id="saturn" class="orbit">
             <div class="pos">
-              <div class="planet" id="saturn-planet" data-name="Saturn" data-speed="9.69 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="saturn-planet" data-name="Saturn" data-speed="9.69 km/s" data-size="116,460 km" data-distance="1.43 billion km">
                 <dl class="infos">
                   <dt>Saturn <br><span class="speed">9.69 km/s</span></dt>
+                  <a href="saturn.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -170,9 +194,10 @@
           <!-- Uranus -->
           <div id="uranus" class="orbit">
             <div class="pos">
-              <div class="planet" id="uranus-planet" data-name="Uranus" data-speed="6.81 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="uranus-planet" data-name="Uranus" data-speed="6.81 km/s" data-size="50,724 km" data-distance="2.87 billion km">
                 <dl class="infos">
                   <dt>Uranus <br><span class="speed">6.81 km/s</span></dt>
+                  <a href="uranus.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -181,9 +206,10 @@
           <!-- Neptune -->
           <div id="neptune" class="orbit">
             <div class="pos">
-              <div class="planet" id="neptune-planet" data-name="Neptune" data-speed="5.43 km/s" data-distance="4.5 billion km">
+              <div class="planet" id="neptune-planet" data-name="Neptune" data-speed="5.43 km/s" data-size="49,244 km" data-distance="4.5 billion km">
                 <dl class="infos">
                   <dt>Neptune <br><span class="speed">5.43 km/s</span></dt>
+                  <a href="neptune.html">More Detail</a>
                 </dl>
               </div>
             </div>
@@ -193,6 +219,7 @@
           <div id="sun" class="planet" id="sun-planet">
             <dl class="infos">
               <dt>Sun <br><span class="speed">0 km/s</span></dt>
+              <a href="sun.html">More Detail</a>
             </dl>
           </div>
           
@@ -210,54 +237,35 @@
     <script src="{{ url_for('static', filename='js/prefixfree.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scripts.min.js') }}"></script>
 
-    <!-- JavaScript to add click-to-zoom and info box functionality -->
+    <!-- JavaScript to handle Size and Distance selection -->
     <script>
+      const sizeRadioButton = document.querySelector('input[name="scale"][class="set-size"]');
+      const distanceRadioButton = document.querySelector('input[name="scale"][class="set-distance"]');
       const planets = document.querySelectorAll('.planet');
-      const planetLinks = document.querySelectorAll('#data a');
 
-      // Function to remove the zoom and active classes from all elements
-      function resetZoomAndActive() {
-        document.querySelectorAll('.zoomed').forEach(zoomed => {
-          zoomed.classList.remove('zoomed');
-        });
-        document.querySelector('#data a.active')?.classList.remove('active');
-        document.querySelectorAll('.infos').forEach(info => {
-          info.style.display = 'none';
-        });
-      }
-
-      // Handle planet clicks
-      planets.forEach(planet => {
-        planet.addEventListener('click', function() {
-          resetZoomAndActive();
-
-          // Add zoom effect to the clicked planet
-          const orbitElement = this.closest('.orbit');
-          if (orbitElement) {
-            orbitElement.classList.add('zoomed');
-            this.querySelector('.infos').style.display = 'block'; // Show planet info
-          }
-
-          // Set the corresponding link as active
-          const planetName = this.dataset.name.toLowerCase();
-          document.querySelector(`#data a[data-planet="${planetName}"]`).classList.add('active');
-        });
+      // Function to update the displayed information based on selected radio button
+      sizeRadioButton.addEventListener('change', function() {
+        if (this.checked) {
+          planets.forEach(planet => {
+            const size = planet.getAttribute('data-size');
+            const infosElement = planet.querySelector('.infos');
+            if (infosElement) {
+              infosElement.querySelector('dt').innerHTML = planet.getAttribute('data-name') + '<br><span class="size">' + size + '</span>';
+            }
+          });
+        }
       });
 
-      // Handle data (planet name) clicks
-      planetLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          resetZoomAndActive();
-
-          // Trigger the planet click
-          const planetId = this.getAttribute('data-planet') + "-planet";
-          const planet = document.getElementById(planetId);
-          planet.click();
-
-          // Set the clicked link as active
-          this.classList.add('active');
-        });
+      distanceRadioButton.addEventListener('change', function() {
+        if (this.checked) {
+          planets.forEach(planet => {
+            const distance = planet.getAttribute('data-distance');
+            const infosElement = planet.querySelector('.infos');
+            if (infosElement) {
+              infosElement.querySelector('dt').innerHTML = planet.getAttribute('data-name') + '<br><span class="distance">' + distance + '</span>';
+            }
+          });
+        }
       });
     </script>
 
